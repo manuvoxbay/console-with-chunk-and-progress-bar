@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <!-- Styles -->
         <style>
@@ -82,19 +83,55 @@
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
+                    <img src=""/>
+                  
+                 
+                    <div>
+                      <form method="post" enctype="multipart/form-data"" action={{route('save.file')}}>
+                        <input id="myinput" name="file1" type="file" onchange="encode();" />
+                        {{csrf_field()}}
+                          <input type="text" name="val" id="val"/>
+                          <input type="submit" name="save" id="save" value="save"/>
+                      </form>
+                      <img src="" id="imgs"/>
+                    </div>
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+             
             </div>
         </div>
+
+        <script>
+             function encode() {    
+               var selectedfile = document.getElementById("myinput").files;
+               if (selectedfile.length > 0) {
+                 var imageFile = selectedfile[0];
+                 var fileReader = new FileReader();
+                 var v = fileReader.readAsDataURL(imageFile);
+                 fileReader.onload = function(fileLoadedEvent) {
+                   var srcData = fileLoadedEvent.target.result;
+                   $("#val").val(srcData);
+                   $("#imgs").attr('src',srcData);
+                   // var newImage = document.createElement('img');
+                   // newImage.src = srcData;
+                   // document.getElementById("dummy").innerHTML = newImage.outerHTML;
+                   // document.getElementById("txt").value = document.getElementById("dummy").innerHTML;
+                 }
+                 
+
+               }
+             }
+           </script>
+
+        <script>
+
+            $(document).ready(function()
+            {
+                $("#file1").change(function(event)
+                {
+                   console.log($("#file1").val());
+                });
+            });
+        </script>
     </body>
 </html>
